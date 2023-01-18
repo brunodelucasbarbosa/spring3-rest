@@ -1,6 +1,6 @@
 package br.com.course.spring3rest.controller;
 
-import br.com.course.spring3rest.exception.UnsupportedMathOperationException;
+import br.com.course.spring3rest.exception.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +15,6 @@ public class MathController {
 			@PathVariable("numberOne") String numberOne,
 			@PathVariable("numberTwo") String numberTwo
 	) {
-			throw new UnsupportedMathOperationException("Please set a numeric value!");
+			throw new ResourceNotFoundException("Please set a numeric value!");
 	}
 }
