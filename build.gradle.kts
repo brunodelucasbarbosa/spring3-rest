@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.0.1"
 	id("io.spring.dependency-management") version "1.1.0"
+	id ("org.flywaydb.flyway") version "9.8.1"
 }
 
 group = "br.com.course"
@@ -22,7 +23,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("com.github.dozermapper:dozer-core:6.4.0")
-
 
 
 	compileOnly("org.projectlombok:lombok")

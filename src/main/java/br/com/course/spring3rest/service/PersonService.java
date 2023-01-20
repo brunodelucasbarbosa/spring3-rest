@@ -1,7 +1,9 @@
 package br.com.course.spring3rest.service;
 
 import br.com.course.spring3rest.config.mapper.DozerMapper;
+import br.com.course.spring3rest.config.mapper.custom.PersonMapper;
 import br.com.course.spring3rest.dto.PersonDTO;
+import br.com.course.spring3rest.dto.PersonDTOV2;
 import br.com.course.spring3rest.exception.ResourceNotFoundException;
 import br.com.course.spring3rest.model.Person;
 import br.com.course.spring3rest.repository.PersonRepository;
@@ -19,10 +21,19 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private PersonMapper mapper;
+
     public PersonDTO create(PersonDTO person) {
         logger.info("Creating person: " + person);
         var entity = DozerMapper.parseObject(person, Person.class);
         return DozerMapper.parseObject(personRepository.save(entity), PersonDTO.class);
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person) {
+        logger.info("Creating person: " + person);
+        var entity = mapper.convertDTOToEntity(person);
+        return mapper.convertEntityToDTO(personRepository.save(entity));
     }
 
     public PersonDTO findById(Long id) {

@@ -1,6 +1,7 @@
 package br.com.course.spring3rest.controller;
 
 import br.com.course.spring3rest.dto.PersonDTO;
+import br.com.course.spring3rest.dto.PersonDTOV2;
 import br.com.course.spring3rest.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/person")
+@RequestMapping("/person")
 public class PersonController {
 
     @Autowired
@@ -18,6 +19,11 @@ public class PersonController {
     @PostMapping
     public PersonDTO create(@RequestBody PersonDTO person) {
         return personService.create(person);
+    }
+
+    @PostMapping("/v2")
+    public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person) {
+        return personService.createV2(person);
     }
 
     @GetMapping("/{id}")
