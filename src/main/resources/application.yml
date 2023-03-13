@@ -1,3 +1,5 @@
+cors:
+  originPatterns: http://localhost:3000,http://localhost:8080
 spring:
   datasource:
       driver-class-name: org.postgresql.Driver
@@ -6,8 +8,12 @@ spring:
       password: admin
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  flyway:
+    url: jdbc:postgresql://localhost:5432/spring_rest?useTimezone=true&serverTimezone=UTC
+    user: root
+    password: admin

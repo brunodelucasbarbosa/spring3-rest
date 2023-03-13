@@ -4,6 +4,7 @@ import br.com.course.spring3rest.config.mapper.DozerMapper;
 import br.com.course.spring3rest.config.mapper.custom.PersonMapper;
 import br.com.course.spring3rest.dto.PersonDTO;
 import br.com.course.spring3rest.dto.PersonDTOV2;
+import br.com.course.spring3rest.exception.RequiredObjectNullException;
 import br.com.course.spring3rest.exception.ResourceNotFoundException;
 import br.com.course.spring3rest.model.Person;
 import br.com.course.spring3rest.repository.PersonRepository;
@@ -25,9 +26,12 @@ public class PersonService {
     private PersonMapper mapper;
 
     public PersonDTO create(PersonDTO person) {
+        if (person == null) throw new RequiredObjectNullException();
+
         logger.info("Creating person: " + person);
         var entity = DozerMapper.parseObject(person, Person.class);
-        return DozerMapper.parseObject(personRepository.save(entity), PersonDTO.class);
+        var dto = DozerMapper.parseObject(personRepository.save(entity), PersonDTO.class);
+        return dto;
     }
 
     public PersonDTOV2 createV2(PersonDTOV2 person) {
@@ -40,18 +44,22 @@ public class PersonService {
         logger.info("Finding person by id: " + id);
 
         var person = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
-        return DozerMapper.parseObject(person, PersonDTO.class);
+        var dto = DozerMapper.parseObject(person, PersonDTO.class);
+
+        return dto;
     }
 
     public List<PersonDTO> findAll() {
         logger.info("Finding all persons");
-        return DozerMapper.parseListObjects(personRepository.findAll(), PersonDTO.class);
+        var persons = DozerMapper.parseListObjects(personRepository.findAll(), PersonDTO.class);
+
+        return persons;
     }
 
     public PersonDTO update(PersonDTO person) {
         logger.info("Updating person");
 
-        var personExists = personRepository.findById(person.getId()).orElseThrow(
+        var personExists = personRepository.findById(person.getKey()).orElseThrow(
                 () -> new ResourceNotFoundException("Person not found"));
 
         personExists.setFirstName(person.getFirstName() != null ? person.getFirstName() : personExists.getFirstName());
@@ -59,7 +67,8 @@ public class PersonService {
         personExists.setAddress(person.getAddress() != null ? person.getAddress() : personExists.getAddress());
         personExists.setGender(person.getGender() != null ? person.getGender() : personExists.getGender());
 
-        return DozerMapper.parseObject(personRepository.save(personExists), PersonDTO.class);
+        var dto = DozerMapper.parseObject(personRepository.save(personExists), PersonDTO.class);
+        return dto;
     }
 
     public void delete(Long id) {

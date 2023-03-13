@@ -1,17 +1,3 @@
-CREATE TABLE
-    public.person (
-                      id bigserial NOT NULL,
-                      address character varying(80) NOT NULL,
-                      first_name character varying(80) NOT NULL,
-                      gender character varying(80) NOT NULL,
-                      last_name character varying(80) NOT NULL
-);
-
-ALTER TABLE
-    public.person
-    ADD
-        CONSTRAINT person_pkey PRIMARY KEY (id)
-
 INSERT INTO person (address, first_name, gender, last_name) VALUES ('Rua dos Bobos, 0', 'João', 'Male', 'Silva');
 INSERT INTO person (address, first_name, gender, last_name) VALUES ('Av. Paulista, 1000', 'Maria', 'Female', 'Santos');
 INSERT INTO person (address, first_name, gender, last_name) VALUES ('Rua das Flores, 123', 'Carlos', 'Male', 'Gomes');
