@@ -1,6 +1,7 @@
 package br.com.course.spring3rest.exception.handler;
 
 import br.com.course.spring3rest.exception.ExceptionResponse;
+import br.com.course.spring3rest.exception.InvalidJWTAuthenticationException;
 import br.com.course.spring3rest.exception.RequiredObjectNullException;
 import br.com.course.spring3rest.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 	@ExceptionHandler(RequiredObjectNullException.class)
 	public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request) {
+		var exceptionResponse = new ExceptionResponse(
+				new Date(),
+				ex.getMessage(),
+				request.getDescription(false)
+		);
+
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(InvalidJWTAuthenticationException.class)
+	public final ResponseEntity<ExceptionResponse> handleInvalidJWTAuthenticationExceptions(Exception ex, WebRequest request) {
 		var exceptionResponse = new ExceptionResponse(
 				new Date(),
 				ex.getMessage(),

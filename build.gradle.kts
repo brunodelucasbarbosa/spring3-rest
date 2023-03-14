@@ -37,6 +37,10 @@ dependencies {
 	implementation("io.rest-assured:rest-assured:5.3.0")
 	implementation("org.testcontainers:testcontainers-bom:1.17.6") //import bom
 	testImplementation("org.testcontainers:postgresql:1.17.6") //no version specified
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+	implementation("org.springframework.security:spring-security-core:6.0.2")
+// https://mvnrepository.com/artifact/org.springframework.security/spring-security-jwt
+	implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
 
 
 
